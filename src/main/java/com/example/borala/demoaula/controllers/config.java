@@ -19,66 +19,6 @@ public class config {
     @GetMapping
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        response.getWriter().println("<!DOCTYPE html>\n" +
-                "<html lang=\"en\">\n" +
-                "<head>\n" +
-                "    <meta charset=\"UTF-8\">\n" +
-                "    <title>Title</title>\n" +
-                "</head>\n" +
-                "<body>\n" +
-                "<table  action=\"/config\" border=\"1\">\n" +
-                "    <tr>\n" +
-                "        <td>ID</td>\n" +
-                "        <td>Nome do alimento</td>\n" +
-                "        <td>marca</td>\n" +
-                "        <td>pesagem</td>\n" +
-                "        <td>tipo</td>\n" +
-                "        <td>preco R$</td>\n" +
-                "    </tr>\n" +
-                "    <tr>\n" +
-                "        <td> 1  </td>\n" +
-                "        <td> Feijao </td>\n" +
-                "        <td> Tio Joao </td>\n" +
-                "        <td>  1kg </td>\n" +
-                "        <td> feijao preto </td>\n" +
-                "        <td>  10 </td>\n" +
-                "    </tr>\n" +
-                "    <tr>\n" +
-                "        <td> 2 </td>\n" +
-                "        <td>  Arroz </td>\n" +
-                "        <td>  ArrowZ </td>\n" +
-                "        <td>  1kg </td>\n" +
-                "        <td> Arroz branco </td>\n" +
-                "        <td> 5 </td>\n" +
-                "    </tr>\n" +
-                "    <tr>\n" +
-                "        <td> 3 </td>\n" +
-                "        <td> Macarrao </td>\n" +
-                "        <td> Macarrone </td>\n" +
-                "        <td>  1kg </td>\n" +
-                "        <td> Macarrão tradicional </td>\n" +
-                "        <td> 2 </td>\n" +
-                "    </tr>\n" +
-                "    <tr>\n" +
-                "        <td> 4 </td>\n" +
-                "        <td> Pizza </td>\n" +
-                "        <td> Sadia </td>\n" +
-                "        <td>  600g </td>\n" +
-                "        <td> Pizza de microondas </td>\n" +
-                "        <td> 11 </td>\n" +
-                "    </tr>\n" +
-                "    <tr>\n" +
-                "        <td> 5 </td>\n" +
-                "        <td> Miojo </td>\n" +
-                "        <td> Nissin </td>\n" +
-                "        <td>  80g </td>\n" +
-                "        <td> Miojo tradicional </td>\n" +
-                "        <td> 2 </td>\n" +
-                "    </tr>\n" +
-                "</table>\n" +
-                "</body>\n" +
-                "</html>");
-
                 String ID = "1";
                 String nome = "Feijao";
                 String marca = "Tio joao";

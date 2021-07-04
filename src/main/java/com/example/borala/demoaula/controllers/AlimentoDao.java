@@ -10,6 +10,7 @@ import java.util.List;
 
 import static java.lang.Integer.parseInt;
 
+
 public class AlimentoDao {
 
     conectaBanco conex = new conectaBanco();
@@ -99,6 +100,7 @@ public class AlimentoDao {
 
         return a;
     }
+
 
 
 
