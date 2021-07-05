@@ -7,7 +7,7 @@ public class Alimento {
     private String pesagem;
     private String tipo;
     private Integer preco;
-    private Integer pesquisa;
+
 
     public Alimento(String ID, String nome, String marca, String pesagem, String tipo, Integer preco) {
         this.ID = ID;
@@ -68,11 +68,5 @@ public class Alimento {
     public void setPreco(Integer preco) {
         this.preco = preco;
     }
-    public Integer getPesquisa() {
-        return pesquisa;
-    }
 
-    public void setPesquisa(Integer pesquisa) {
-        this.pesquisa = pesquisa;
-    }
 }

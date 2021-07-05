@@ -1,10 +1,7 @@
 package com.example.borala.demoaula.controllers;
 
 import java.net.URISyntaxException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +9,18 @@ import static java.lang.Integer.parseInt;
 
 
 public class AlimentoDao {
+
+
+
+    private final String CREATE =" CREATE TABLE public.alimento(" +
+                   " id character varying COLLATE pg_catalog.\"default\" NOT NULL," +
+                   " nome character varying COLLATE pg_catalog.\"default\"," +
+                   " marca character varying COLLATE pg_catalog.\"default\"," +
+                   " pesagem character varying COLLATE pg_catalog.\"default\", "  +
+                    "tipo character varying COLLATE pg_catalog.\"default\", "+
+                    "preco character varying COLLATE pg_catalog.\"default\", "+
+                    "CONSTRAINT alimento_pkey PRIMARY KEY (id));";
+
 
     conectaBanco conex = new conectaBanco();
 
@@ -66,6 +75,23 @@ public class AlimentoDao {
         return array;
     }
 
+    public void create(){
+
+        Connection connection = null;
+        try {
+            connection = conectaBanco.getConnection();
+        } catch (SQLException | URISyntaxException throwables) {
+            throwables.printStackTrace();
+        }
+        
+        try {
+            Statement st = connection.createStatement();
+            st.execute(CREATE);
+        }catch(SQLException e){
+            System.out.println("erro"+e);
+        }
+        
+    }
 
 
 
