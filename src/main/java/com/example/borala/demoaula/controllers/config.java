@@ -15,7 +15,7 @@ import java.io.IOException;
 @RequestMapping("/config")
 public class config {
     AlimentoDao control = new AlimentoDao();
-    conectaBanco conex = new conectaBanco();
+
     @GetMapping
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
@@ -23,7 +23,7 @@ public class config {
         ali.create();
 
 
-        ali.salvar(new Alimento("1","feijao","Tio joão","1kg","feijao preto",10));
+        ali.salvar(new Alimento("1","feijao","Tio joao","1kg","feijao preto",10));
         ali.salvar(new Alimento("2","arroz","ArrowZ","1kg","aroz branco",5));
         ali.salvar(new Alimento("3","Banana","Bans","50g","Banana Prata",5));
         ali.salvar(new Alimento("4","Macarrao","Macarrone","1kg","macarrao tradicional",2));

@@ -11,31 +11,27 @@ import static java.lang.Integer.parseInt;
 public class AlimentoDao {
 
 
+    private static conectaBanco con;
+    private final String CREATE = " CREATE TABLE public.alimento(" +
+            " id character varying COLLATE pg_catalog.\"default\" NOT NULL," +
+            " nome character varying COLLATE pg_catalog.\"default\"," +
+            " marca character varying COLLATE pg_catalog.\"default\"," +
+            " pesagem character varying COLLATE pg_catalog.\"default\", " +
+            "tipo character varying COLLATE pg_catalog.\"default\", " +
+            "preco character varying COLLATE pg_catalog.\"default\", " +
+            "CONSTRAINT alimento_pkey PRIMARY KEY (id));";
 
-    private final String CREATE =" CREATE TABLE public.alimento(" +
-                   " id character varying COLLATE pg_catalog.\"default\" NOT NULL," +
-                   " nome character varying COLLATE pg_catalog.\"default\"," +
-                   " marca character varying COLLATE pg_catalog.\"default\"," +
-                   " pesagem character varying COLLATE pg_catalog.\"default\", "  +
-                    "tipo character varying COLLATE pg_catalog.\"default\", "+
-                    "preco character varying COLLATE pg_catalog.\"default\", "+
-                    "CONSTRAINT alimento_pkey PRIMARY KEY (id));";
-
-
-    conectaBanco conex = new conectaBanco();
+    public AlimentoDao() {
+        con = new conectaBanco(System.getenv("DATABASE_HOST"), System.getenv("DATABASE_PORT"), System.getenv("DATABASE_NAME"), System.getenv("DATABASE_USERNAME"), System.getenv("DATABASE_PASSWORD"));
+    }
 
 
     public void salvar (Alimento mod){
-        Connection connection = null;
-        try {
-            connection = conectaBanco.getConnection();
-        } catch (SQLException | URISyntaxException throwables) {
-            throwables.printStackTrace();
-        }
 
         // estabelecer a conexao com o banco de dados
         try {
-            PreparedStatement pst = connection.prepareStatement("insert into alimento(id,nome,marca,pesagem,tipo,preco) values (?,?,?,?,?,?)");// o preapredStatement é responsavel por fazer uma inserção de dados de forma segura no banco através de uma String sql q é passada por parametro
+            con.conectar();
+            PreparedStatement pst = con.getCon().prepareStatement("insert into alimento(id,nome,marca,pesagem,tipo,preco) values (?,?,?,?,?,?)");// o preapredStatement é responsavel por fazer uma inserção de dados de forma segura no banco através de uma String sql q é passada por parametro
             pst.setString(1,mod.getID());
             pst.setString(2,mod.getNome());
             pst.setString(3,mod.getMarca());
@@ -43,7 +39,7 @@ public class AlimentoDao {
             pst.setString(5,mod.getTipo());
             pst.setInt(6,mod.getPreco());
             pst.execute();
-
+            con.desconectar();
         } catch (SQLException ex) {
             java.util.logging.Logger.getLogger(AlimentoDao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
@@ -51,23 +47,20 @@ public class AlimentoDao {
     }
 
     public static ArrayList<Alimento> listar () {
-        Connection connection = null;
+
         ArrayList<Alimento> array = new ArrayList<>();
-        try {
-            connection = conectaBanco.getConnection();
-        } catch (SQLException | URISyntaxException throwables) {
-            throwables.printStackTrace();
-        }
+
 
         // estabelecer a conexao com o banco de dados
         try {
-            PreparedStatement pst = connection.prepareStatement("select * from alimento");// o preapredStatement é responsavel por fazer uma inserção de dados de forma segura no banco através de uma String sql q é passada por parametro
+            con.conectar();
+            PreparedStatement pst = con.getCon().prepareStatement("select * from alimento");// o preapredStatement é responsavel por fazer uma inserção de dados de forma segura no banco através de uma String sql q é passada por parametro
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 Alimento ali = new Alimento(rs.getString("id"), rs.getString("nome"), rs.getString("marca"), rs.getString("pesagem"),rs.getString("tipo"),rs.getInt("preco"));
                 array.add(ali);
             }
-
+            con.desconectar();
         } catch (SQLException ex) {
             java.util.logging.Logger.getLogger(AlimentoDao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
@@ -77,16 +70,12 @@ public class AlimentoDao {
 
     public void create(){
 
-        Connection connection = null;
+
         try {
-            connection = conectaBanco.getConnection();
-        } catch (SQLException | URISyntaxException throwables) {
-            throwables.printStackTrace();
-        }
-        
-        try {
-            Statement st = connection.createStatement();
+            con.conectar();
+            Statement st = con.getCon().createStatement();
             st.execute(CREATE);
+            con.desconectar();
         }catch(SQLException e){
             System.out.println("erro"+e);
         }
@@ -98,12 +87,7 @@ public class AlimentoDao {
 
 
     public Alimento readforID (String id) {
-        Connection connection = null;
-        try {
-            connection = conectaBanco.getConnection();
-        } catch (SQLException | URISyntaxException throwables) {
-            throwables.printStackTrace();
-        }
+
 
         // estabelecer a conexao com o banco de dados
        PreparedStatement stmt = null;
@@ -111,15 +95,15 @@ public class AlimentoDao {
         Alimento a = null;
 
         try{
-
-            stmt = connection.prepareStatement("select * from alimento where id =? ");
+            con.conectar();
+            stmt = con.getCon().prepareStatement("select * from alimento where id =? ");
             stmt.setString(1,( id ));
             rs = stmt.executeQuery();
 
             if (rs.next()) {
                  a = new Alimento(rs.getString("id"), rs.getString("nome"), rs.getString("marca"), rs.getString("pesagem"),rs.getString("tipo"),rs.getInt("preco"));
             }
-
+            con.desconectar();
         } catch (SQLException ex){
             System.out.println(ex.getMessage());
         }

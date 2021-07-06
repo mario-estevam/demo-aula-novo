@@ -6,16 +6,39 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 public class conectaBanco {
-    static Connection getConnection() throws SQLException, URISyntaxException {
-        String dbUri = System.getenv("DATABASE_HOST");
-        String dbPort = System.getenv("DATABASE_PORT");
-        String dbName = System.getenv("DATABASE_NAME");
+    String url;
+    String usuario;
+    String senha;
+    Connection con;
 
-        String username = System.getenv("DATABASE_USERNAME");
-        String password = System.getenv("DATABASE_PASSWORD");
-        String dbUrl = "jdbc:postgresql://" + dbUri + ':' + dbPort + "/" + dbName + "?serverTimezone=UTC";
+    public conectaBanco(String host, String porta, String db, String usuario, String senha) {
+        this.url = "jdbc:postgresql://" + host + ':' + porta + "/" + db + "?serverTimezone=UTC";
+        this.usuario = usuario;
+        this.senha = senha;
+    }
 
-        return DriverManager.getConnection(dbUrl, username, password);
+    public void conectar(){
+        try {
+            con = DriverManager.getConnection(url, usuario, senha);
+        }catch (Exception e){
+            System.out.println("Erro na conexão: " + e.getMessage());
+        }
+    }
+
+    public void desconectar(){
+        try {
+            con.close();
+        }catch (Exception e){
+            System.out.println("Erro na desconexão: " + e.getMessage());
+        }
+    }
+
+    public Connection getCon() {
+        return con;
     }
 }

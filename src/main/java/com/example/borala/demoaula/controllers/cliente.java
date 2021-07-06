@@ -18,7 +18,6 @@ import java.util.ArrayList;
 @RequestMapping ("/cliente")
 public class cliente {
 
-    conectaBanco conex = new conectaBanco();
 
     @GetMapping
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, SQLException {

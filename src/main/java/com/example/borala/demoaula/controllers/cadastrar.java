@@ -14,7 +14,7 @@ import java.io.IOException;
 public class cadastrar {
 
     AlimentoDao control = new AlimentoDao();
-    conectaBanco conex = new conectaBanco();
+
 
 
     @PostMapping
